@@ -1,6 +1,7 @@
 package com.ral.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 
@@ -37,6 +39,9 @@ public class Consulta {
 	
 	@Column(name = "fecha", nullable = false) //La anotacion temporal ya no se usa
 	private LocalDateTime fecha;
+	
+	@OneToMany
+	private List<DetalleConsulta> detalleConsulta;
 
 	public Integer getIdConsulta() {
 		return idConsulta;
@@ -85,6 +90,16 @@ public class Consulta {
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
 	}
+
+	public List<DetalleConsulta> getDetalleConsulta() {
+		return detalleConsulta;
+	}
+
+	public void setDetalleConsulta(List<DetalleConsulta> detalleConsulta) {
+		this.detalleConsulta = detalleConsulta;
+	}
+	
+	
 	
 	
 	
