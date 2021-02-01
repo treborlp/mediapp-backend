@@ -3,6 +3,7 @@ package com.ral.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -37,11 +38,11 @@ public class Consulta {
 	@Column(name="num_consultorio", length = 3, nullable=true)
 	private String numConsultorio;
 	
-	@Column(name = "fecha", nullable = false) //La anotacion temporal ya no se usa
+	@Column(name = "fecha", nullable = false) //La anotacion @temporal ya no se usa
 	private LocalDateTime fecha;
 	
-	@OneToMany
-	private List<DetalleConsulta> detalleConsulta;
+	@OneToMany(mappedBy = "consulta", cascade = {CascadeType.ALL}, orphanRemoval = true ) //"consulta" hace referencia a la columna de la entidad detalle_consulta que tiene el mismo nombre
+	private List<DetalleConsulta> detalleConsulta; //orphanRemoval, permite eliminar registros individuales
 
 	public Integer getIdConsulta() {
 		return idConsulta;
@@ -98,6 +99,33 @@ public class Consulta {
 	public void setDetalleConsulta(List<DetalleConsulta> detalleConsulta) {
 		this.detalleConsulta = detalleConsulta;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idConsulta == null) ? 0 : idConsulta.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Consulta other = (Consulta) obj;
+		if (idConsulta == null) {
+			if (other.idConsulta != null)
+				return false;
+		} else if (!idConsulta.equals(other.idConsulta))
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 	
