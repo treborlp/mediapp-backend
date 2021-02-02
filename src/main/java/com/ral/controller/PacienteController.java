@@ -2,6 +2,8 @@ package com.ral.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,12 +35,12 @@ public class PacienteController {
 	}
 	
 	@PostMapping
-	public Paciente registrar(@RequestBody Paciente paciente) throws Exception{
+	public Paciente registrar(@Valid @RequestBody Paciente paciente) throws Exception{
 		return service.registrar(paciente);
 	}
 	
 	@PutMapping
-	public Paciente modificar(@RequestBody Paciente paciente) throws Exception{
+	public Paciente modificar(@Valid @RequestBody Paciente paciente) throws Exception{
 		return service.modificar(paciente);
 	}
 	
