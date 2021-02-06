@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ral.exception.ModeloNotFoundException;
 import com.ral.model.Paciente;
 import com.ral.service.IPacienteService;
 
@@ -35,6 +36,11 @@ public class PacienteController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Paciente>  listarPorId(@PathVariable("id") Integer idPaciente) throws Exception{
 		Paciente obj = service.buscarPorId(idPaciente);
+		
+		if(obj.getIdPaciente()==null) {
+			throw new ModeloNotFoundException("ID NO ENCONTRADO"+idPaciente);
+		}
+		
 		return new ResponseEntity<Paciente>(obj, HttpStatus.OK);
 	}
 	
@@ -52,6 +58,12 @@ public class PacienteController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> eliminar(@PathVariable("id") Integer idPaciente) throws Exception {
+		
+		Paciente obj = service.buscarPorId(idPaciente);
+		
+		if(obj.getIdPaciente()==null) {
+			throw new ModeloNotFoundException("ID NO ENCONTRADO"+idPaciente);
+		}
 		service.eliminar(idPaciente);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
