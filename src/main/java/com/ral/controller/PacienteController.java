@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,28 +27,33 @@ public class PacienteController {
 	private IPacienteService service;
 	
 	@GetMapping
-	public List<Paciente> listar() throws Exception {
-		return service.listar();
+	public ResponseEntity<List<Paciente>>  listar() throws Exception {
+		List<Paciente>  lista = service.listar();
+		return new ResponseEntity<List<Paciente>>(lista, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public Paciente listarPorId(@PathVariable("id") Integer idPaciente) throws Exception{
-		return service.buscarPorId(idPaciente);
+	public ResponseEntity<Paciente>  listarPorId(@PathVariable("id") Integer idPaciente) throws Exception{
+		Paciente obj = service.buscarPorId(idPaciente);
+		return new ResponseEntity<Paciente>(obj, HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public Paciente registrar(@Valid @RequestBody Paciente paciente) throws Exception{
-		return service.registrar(paciente);
+	public ResponseEntity<Paciente> registrar(@Valid @RequestBody Paciente paciente) throws Exception{
+		Paciente obj = service.registrar(paciente);
+		return new ResponseEntity<Paciente>(obj, HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public Paciente modificar(@Valid @RequestBody Paciente paciente) throws Exception{
-		return service.modificar(paciente);
+	public ResponseEntity<Paciente> modificar(@Valid @RequestBody Paciente paciente) throws Exception{
+		Paciente obj = service.modificar(paciente);
+		return new ResponseEntity<Paciente>(obj, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
-	public void eliminar(@PathVariable("id") Integer idPaciente) throws Exception {
+	public ResponseEntity<Void> eliminar(@PathVariable("id") Integer idPaciente) throws Exception {
 		service.eliminar(idPaciente);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
 }
