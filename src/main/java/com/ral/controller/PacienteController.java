@@ -1,5 +1,6 @@
 package com.ral.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ral.exception.ModeloNotFoundException;
 import com.ral.model.Paciente;
@@ -44,10 +46,19 @@ public class PacienteController {
 		return new ResponseEntity<Paciente>(obj, HttpStatus.OK);
 	}
 	
-	@PostMapping
+	/*@PostMapping
 	public ResponseEntity<Paciente> registrar(@Valid @RequestBody Paciente paciente) throws Exception{
 		Paciente obj = service.registrar(paciente);
 		return new ResponseEntity<Paciente>(obj, HttpStatus.CREATED);
+	}*/
+	
+	//Registrar con el modelo de Richarson
+	@PostMapping
+	public ResponseEntity<Paciente> registrar(@Valid @RequestBody Paciente paciente) throws Exception{
+		Paciente obj = service.registrar(paciente);
+		
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdPaciente()).toUri();
+		return ResponseEntity.created(location).build();
 	}
 	
 	@PutMapping

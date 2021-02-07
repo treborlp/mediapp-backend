@@ -27,11 +27,11 @@ public class Paciente {
 	@Column(name="direcion", nullable = true, length = 150)
 	private String direcion;
 	
-	@Size(min = 8, message = "El dni debe tener como minimo 8 digitos")
+	@Size(min = 8, message = "{dni.size}")
 	@Column(name="dni", nullable = false, length = 8, unique=true)
 	private String dni;
 	
-	@Size(min = 9, message = "El telefono debe tener como minimo 9 digitos")
+	@Size(min = 9, message = "{telefono.size}")
 	@Column(name="telefono", nullable = true, length = 9)
 	private String telefono;
 	
