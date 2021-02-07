@@ -62,7 +62,7 @@ public class PacienteController {
 		Paciente obj = service.buscarPorId(idPaciente);
 		
 		if(obj.getIdPaciente()==null) {
-			throw new ModeloNotFoundException("ID NO ENCONTRADO"+idPaciente);
+			throw new ModeloNotFoundException("ID NO ENCONTRADO: "+idPaciente);
 		}
 		service.eliminar(idPaciente);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
