@@ -45,7 +45,7 @@ public class PacienteController {
 	public ResponseEntity<Paciente>  listarPorId(@PathVariable("id") Integer idPaciente) throws Exception{
 		Paciente obj = service.buscarPorId(idPaciente);
 		
-		if(obj.getIdPaciente()==null) {
+		if(obj==null) {
 			throw new ModeloNotFoundException("ID NO ENCONTRADO"+idPaciente);
 		}
 		
@@ -56,7 +56,7 @@ public class PacienteController {
 	public EntityModel<Paciente> listarPorHateoas(@PathVariable("id") Integer idPaciente) throws Exception{
 		Paciente obj = service.buscarPorId(idPaciente);
 		
-		if(obj.getIdPaciente()==null) {
+		if(obj==null) {
 			throw new ModeloNotFoundException("ID NO ENCONTRADO"+idPaciente);
 		}
 		

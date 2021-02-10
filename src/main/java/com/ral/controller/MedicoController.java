@@ -45,7 +45,7 @@ public class MedicoController {
 	public ResponseEntity<Medico>  listarPorId(@PathVariable("id") Integer idMedico) throws Exception{
 		Medico obj = service.buscarPorId(idMedico);
 		
-		if(obj.getIdMedico()==null) {
+		if(obj==null) {
 			throw new ModeloNotFoundException("ID NO ENCONTRADO"+idMedico);
 		}
 		
@@ -56,7 +56,7 @@ public class MedicoController {
 	public EntityModel<Medico> listarPorHateoas(@PathVariable("id") Integer idMedico) throws Exception{
 		Medico obj = service.buscarPorId(idMedico);
 		
-		if(obj.getIdMedico()==null) {
+		if(obj==null) {
 			throw new ModeloNotFoundException("ID NO ENCONTRADO"+idMedico);
 		}
 		
@@ -69,23 +69,23 @@ public class MedicoController {
 	} 
 	
 	/*@PostMapping
-	public ResponseEntity<Medico> registrar(@Valid @RequestBody Medico Medico) throws Exception{
+	public ResponseEntity<Medico> registrar(@Valid @RequestBody Medico medico) throws Exception{
 		Medico obj = service.registrar(Medico);
 		return new ResponseEntity<Medico>(obj, HttpStatus.CREATED);
 	}*/
 	
 	//Registrar con el modelo de Richarson
 	@PostMapping
-	public ResponseEntity<Medico> registrar(@Valid @RequestBody Medico Medico) throws Exception{
-		Medico obj = service.registrar(Medico);
+	public ResponseEntity<Medico> registrar(@Valid @RequestBody Medico medico) throws Exception{
+		Medico obj = service.registrar(medico);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdMedico()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 	
 	@PutMapping
-	public ResponseEntity<Medico> modificar(@Valid @RequestBody Medico Medico) throws Exception{
-		Medico obj = service.modificar(Medico);
+	public ResponseEntity<Medico> modificar(@Valid @RequestBody Medico medico) throws Exception{
+		Medico obj = service.modificar(medico);
 		return new ResponseEntity<Medico>(obj, HttpStatus.OK);
 	}
 	
