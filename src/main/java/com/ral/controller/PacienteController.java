@@ -6,6 +6,12 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+//Importaciones necesarias para el Hateoas
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,6 +51,22 @@ public class PacienteController {
 		
 		return new ResponseEntity<Paciente>(obj, HttpStatus.OK);
 	}
+	
+	@GetMapping("/hateoas/{id}")
+	public EntityModel<Paciente> listarPorHateoas(@PathVariable("id") Integer idPaciente) throws Exception{
+		Paciente obj = service.buscarPorId(idPaciente);
+		
+		if(obj.getIdPaciente()==null) {
+			throw new ModeloNotFoundException("ID NO ENCONTRADO"+idPaciente);
+		}
+		
+		// localhost:8080/pacientes/{id}
+		EntityModel<Paciente> recurso = EntityModel.of(obj);
+		
+		WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).listarPorId(idPaciente));
+		recurso.add(link.withRel("Paciente-Recurso"));
+		return recurso;
+	} 
 	
 	/*@PostMapping
 	public ResponseEntity<Paciente> registrar(@Valid @RequestBody Paciente paciente) throws Exception{
