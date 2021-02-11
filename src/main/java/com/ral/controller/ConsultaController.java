@@ -24,12 +24,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.ral.dto.ConsultaListaExamenDTO;
 import com.ral.exception.ModeloNotFoundException;
 import com.ral.model.Consulta;
 import com.ral.service.IConsultaService;
 
 @RestController
-@RequestMapping("/consultaes") //se recomienda poner en plural
+@RequestMapping("/consultas") //se recomienda poner en plural
 public class ConsultaController {
 	
 	@Autowired
@@ -74,10 +75,23 @@ public class ConsultaController {
 		return new ResponseEntity<Consulta>(obj, HttpStatus.CREATED);
 	}*/
 	
-	//Registrar con el modelo de Richarson
-	@PostMapping
+	//Registrar con el modelo de Richarson //SIN DTO
+	/*@PostMapping
 	public ResponseEntity<Consulta> registrar(@Valid @RequestBody Consulta consulta) throws Exception{
-		Consulta obj = service.registrar(consulta);
+		//Consulta obj = service.registrar(consulta);
+		Consulta obj = service.registrarTransaccional(consulta); //Con este metodo se registra el detalle de consulta
+
+		
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdConsulta()).toUri();
+		return ResponseEntity.created(location).build();
+	}*/
+	
+	//CON DTO
+	@PostMapping
+	public ResponseEntity<Consulta> registrar(@Valid @RequestBody ConsultaListaExamenDTO dto) throws Exception{
+		//Consulta obj = service.registrar(consulta);
+		Consulta obj = service.registrarTransaccionalDTO(dto); //Con este metodo se registra el detalle de consulta
+
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdConsulta()).toUri();
 		return ResponseEntity.created(location).build();
