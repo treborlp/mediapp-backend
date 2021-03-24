@@ -87,6 +87,7 @@ public class ConsultaController {
 	}*/
 	
 	//CON DTO
+	
 	@PostMapping
 	public ResponseEntity<Consulta> registrar(@Valid @RequestBody ConsultaListaExamenDTO dto) throws Exception{
 		//Consulta obj = service.registrar(consulta);

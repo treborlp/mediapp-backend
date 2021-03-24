@@ -20,7 +20,7 @@ public class DetalleConsulta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idDetalle;
 	
-	@JsonIgnore //Evita que se envie en objeto consulta en el Json de esta forma se evita el bucle 
+	@JsonIgnore //Evita que se envie en objeto consulta en el Json de esta forma se evita el bucle  avoid to send details 
 	@ManyToOne
 	@JoinColumn(name = "id_consulta", nullable = false, foreignKey = @ForeignKey(name = "FK_consulta_detalle"))
 	private Consulta consulta;

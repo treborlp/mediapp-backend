@@ -21,7 +21,7 @@ public class ConsultaExamenPK implements Serializable {
 
 	
 	//Se agrega hashCode y equals que permite compara objetos
-	// Tambien se debe generar el hascode y equal en las clases Consulta y Examen
+	//Tambien se debe generar el hascode y equal en las clases Consulta y Examen
 	@Override
 	public int hashCode() {
 		final int prime = 31;
