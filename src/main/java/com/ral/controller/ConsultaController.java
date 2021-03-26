@@ -1,6 +1,8 @@
 package com.ral.controller;
 
 import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -21,10 +23,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ral.dto.ConsultaListaExamenDTO;
+import com.ral.dto.FiltroConsultaDTO;
 import com.ral.exception.ModeloNotFoundException;
 import com.ral.model.Consulta;
 import com.ral.service.IConsultaService;
@@ -114,6 +118,26 @@ public class ConsultaController {
 		}
 		service.eliminar(idConsulta);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/buscar/otros")
+	public ResponseEntity<List<Consulta>> buscarOtro(@RequestBody FiltroConsultaDTO filtro) throws Exception {
+		
+		List<Consulta> consultas = new ArrayList<>();
+		consultas = service.buscar(filtro);
+		
+		return new ResponseEntity<List<Consulta>>(consultas, HttpStatus.OK);
+		
+	}
+	
+	@GetMapping("/buscar")
+	public ResponseEntity<List<Consulta>> buscarFecha(@RequestParam("fecha") String fecha) throws Exception {
+		
+		List<Consulta> consultas = new ArrayList<>();
+		consultas = service.buscarFecha(LocalDateTime.parse(fecha));
+		
+		return new ResponseEntity<List<Consulta>>(consultas, HttpStatus.OK);
+		
 	}
 
 }
