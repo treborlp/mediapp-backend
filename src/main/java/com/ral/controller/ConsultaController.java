@@ -120,7 +120,7 @@ public class ConsultaController {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
-	@GetMapping("/buscar/otros")
+	@PostMapping("/buscar/otros")
 	public ResponseEntity<List<Consulta>> buscarOtro(@RequestBody FiltroConsultaDTO filtro) throws Exception {
 		
 		List<Consulta> consultas = new ArrayList<>();
