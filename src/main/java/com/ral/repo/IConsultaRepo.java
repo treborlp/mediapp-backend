@@ -17,5 +17,7 @@ public interface IConsultaRepo extends IGenericRepo<Consulta, Integer> {
 	@Query("FROM Consulta c WHERE c.fecha BETWEEN :fechaConsulta AND :fechaSgte")
 	List<Consulta> buscarFechas(@Param("fechaConsulta") LocalDateTime fechaConsulta, @Param("fechaSgte") LocalDateTime fechaSig);
 	
+	@Query(value = "SELECT * FROM fn_listarResumen()", nativeQuery = true)
+	List<Object[]> listarResumen();
 }
 	

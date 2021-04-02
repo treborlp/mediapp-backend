@@ -1,6 +1,7 @@
 package com.ral.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ral.dto.ConsultaListaExamenDTO;
+import com.ral.dto.ConsultaResumenDTO;
 import com.ral.dto.FiltroConsultaDTO;
 import com.ral.model.Consulta;
 import com.ral.repo.IConsultaExamenRepo;
@@ -55,6 +57,21 @@ public class ConsultaServiceImpl extends CRUDImpl<Consulta, Integer> implements 
 	@Override
 	public List<Consulta> buscarFecha(LocalDateTime fecha) {
 		return repo.buscarFechas(fecha, fecha.plusDays(1));
+	}
+
+	@Override
+	public List<ConsultaResumenDTO> listarReumen() {
+		
+		List<ConsultaResumenDTO> consultas = new ArrayList<>();
+		
+		repo.listarResumen().forEach(x -> {
+			ConsultaResumenDTO cr = new ConsultaResumenDTO();
+			cr.setCantidad(Integer.parseInt(String.valueOf(x[0])));
+			cr.setFecha(String.valueOf(x[1]));
+			consultas.add(cr);
+		});
+		
+		return consultas;
 	}
 
 }

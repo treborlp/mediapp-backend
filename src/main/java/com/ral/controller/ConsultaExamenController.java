@@ -26,7 +26,9 @@ public class ConsultaExamenController {
 		List<ConsultaExamen> consultaExamen = new ArrayList<>();
 		
 		consultaExamen = service.listarExamenesPorConsulta(idConsulta);
-		
 		return new ResponseEntity<List<ConsultaExamen>>(consultaExamen, HttpStatus.OK);
+		
 	}
+	
+	
 }

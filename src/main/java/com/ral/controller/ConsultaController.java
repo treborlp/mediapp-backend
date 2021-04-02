@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ral.dto.ConsultaListaExamenDTO;
+import com.ral.dto.ConsultaResumenDTO;
 import com.ral.dto.FiltroConsultaDTO;
 import com.ral.exception.ModeloNotFoundException;
 import com.ral.model.Consulta;
@@ -137,6 +138,16 @@ public class ConsultaController {
 		consultas = service.buscarFecha(LocalDateTime.parse(fecha));
 		
 		return new ResponseEntity<List<Consulta>>(consultas, HttpStatus.OK);
+		
+	}
+	
+	@GetMapping("/listarresumen")
+	public ResponseEntity<List<ConsultaResumenDTO>> listarResumen() throws Exception {
+		
+		List<ConsultaResumenDTO> consultas = new ArrayList<>();
+		consultas = service.listarReumen();
+		
+		return new ResponseEntity<List<ConsultaResumenDTO>>(consultas, HttpStatus.OK);
 		
 	}
 
